@@ -33,7 +33,7 @@ public struct Router<T:RouteOption> {
    */
   public func navigate(_ route:T) {
     guard let window = UIApplication.shared.keyWindow else {
-      console.error("No window available")
+      print("Error: No window available")
       
       return
     }
@@ -61,7 +61,7 @@ public struct Router<T:RouteOption> {
    */
   public func move(_ route:T, animated:Bool = true) {
     guard let window = UIApplication.shared.keyWindow else {
-      console.error("No window available")
+      print("Error: No window available")
       
       return
     }
