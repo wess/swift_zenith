@@ -15,7 +15,7 @@ As well as a Router to simplify navigation through your app.
 
 CocoaPods is a dependency manager for Objective-C and Swift.  
 To learn more about setting up your project for CocoaPods, please refer to the [official documentation](https://cocoapods.org/#install).  
-To integrate ZIP Foundation into your Xcode project using CocoaPods, you have to add it to your project's `Podfile`:
+To integrate Zenith into your Xcode project using CocoaPods, you have to add it to your project's `Podfile`:
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
