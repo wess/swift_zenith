@@ -49,13 +49,13 @@ class MyViewComponent : ViewComponent {
     return label
   }()
   
-  override setupConstraints() {
+  override func setupConstraints() {
     label.addConstraints([
       // Add constraints here
     ])
   }
   
-  override render() -> UIView {
+  override func render() -> UIView {
     return children(
      label
     )
