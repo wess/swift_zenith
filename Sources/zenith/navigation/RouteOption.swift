@@ -32,4 +32,14 @@ import UIKit
 public protocol RouteOption {
   /// Controller to represent the route.
   var controller:UIViewController { get }
+  
+  /// Identifier of route
+  var identifier:String { get }
 }
+
+extension RouteOption {
+  public var identifier:String {
+    return String(describing: type(of: self.controller))
+  }
+}
+
