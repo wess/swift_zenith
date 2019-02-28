@@ -1,7 +1,7 @@
 /**
  *  ViewComponent.swift
  *  Zenith
- * 
+ *
  *  Created by Wess Cope (me@wess.io) on 09/05/19
  *  Copyright 2019 Wess Cope
  */
@@ -41,15 +41,15 @@ open class ViewComponent : NSObject {
   }
   
   /**
-    Called in render and identifies subviews to be laid out and added to
-    host view.
+   Called in render and identifies subviews to be laid out and added to
+   host view.
    
-    - parameter args: List of views, in order to be added, to add to component view.
-    - returns: Component's main view.
+   - parameter args: List of views, in order to be added, to add to component view.
+   - returns: Component's main view.
    */
   public final func children(_ args:UIView...) -> UIView {
     args.forEach(self.view.addSubview)
-
+    
     setupConstraints()
     
     return self.view

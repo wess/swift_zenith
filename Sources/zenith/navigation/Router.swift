@@ -7,14 +7,27 @@
  */
 
 import Foundation
+import SafariServices
 import UIKit
+
 
 /**
   Used for simplified navigation through the app.
  */
-public struct Router<T:RouteOption> {
-  /// Initialize a new router.
-  public init() {}
+public class Router<T:RouteOption> {
+  private var routeCache:[String : UIViewController] = [:]
+  private var browserCache:[URLRequest : SFSafariViewController] = [:]
+  
+  private let cacheRoutes:Bool
+  
+  /**
+   Initialize a new router.
+   
+   - parameter cacheRoutes: Tells the router to cache route controllers. (Defaults to true)
+   */
+  public init(_ cacheRoutes:Bool = true) {
+    self.cacheRoutes = cacheRoutes
+  }
   
   /**
     Navigate to a route from a specific view controller
@@ -46,11 +59,22 @@ public struct Router<T:RouteOption> {
   /**
     Present a route as a modal, from a specific view controller.
    
-    - parameter route: Option to navigate to.
+    - parameter route: Option to present.
     - parameter from: View controller to navigate from.
    */
   public func present(_ route:T, from:UIViewController) {
     _present(route, from: from)
+  }
+  
+  /**
+   Present a route as a modal from the root view controller of the key window.
+   
+   - parameter route: Option to present.
+   */
+  public func present(_ route:T) {
+    guard let root = UIApplication.shared.keyWindow?.rootViewController else { return }
+    
+    _present(route, from: root)
   }
   
   /**
@@ -83,7 +107,7 @@ public struct Router<T:RouteOption> {
 
 extension Router /* Navigation */ {
   internal func _navigate(_ route:T, from:UIViewController) {
-    from.navigationController?.pushViewController(route.controller, animated:true)
+    from.navigationController?.pushViewController(self.fetchController(for: route), animated:true)
   }
   
   internal func _present(_ route:T, from:UIViewController) {
@@ -93,10 +117,28 @@ extension Router /* Navigation */ {
   internal func _move(_ route:T, with:UIWindow, animated:Bool = true) {
     if animated {
       UIView.transition(with: with, duration: 0.5, options: .transitionCrossDissolve, animations: {
-        with.rootViewController = route.controller
+        with.rootViewController = self.fetchController(for: route)
       }, completion: nil)
     } else {
-      with.rootViewController = route.controller
+      with.rootViewController = self.fetchController(for: route)
     }
+  }
+  
+  internal func fetchController(for route:T) -> UIViewController {
+    guard cacheRoutes == true else {
+      return route.controller
+    }
+    
+    let controller:UIViewController
+    
+    if let _controller = routeCache[route.identifier] {
+      controller = _controller
+    } else {
+      controller = route.controller
+      
+      routeCache[route.identifier] = controller
+    }
+    
+    return controller
   }
 }

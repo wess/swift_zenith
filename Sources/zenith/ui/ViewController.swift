@@ -1,7 +1,7 @@
 /**
  *  ViewController.swift
  *  Zenith
- * 
+ *
  *  Created by Wess Cope (me@wess.io) on 09/05/19
  *  Copyright 2019 Wess Cope
  */
@@ -10,20 +10,20 @@ import Foundation
 import UIKit
 
 /**
-   ViewController for Zenith framework that simplifies the separation of Controller and view logic by
-   instructing the view controller subclass what component it will use for rendering. All UIViewController methods
-   are called just the same as before, like: `viewDidLoad`, `viewWillAppear`, `viewDidAppear`, `viewWillDisappear`, and `viewDidDisappear`
-   along with corrisponding view component methods.
-   
-   ```swift
-   class MyViewController : ViewController<MyViewComponent> {
-    override func viewDidLoad() {
-      super.viewDidLoad()
-      // Do any additional setup after loading the component like normal.
-    }
-   }
-   
-   ```
+ ViewController for Zenith framework that simplifies the separation of Controller and view logic by
+ instructing the view controller subclass what component it will use for rendering. All UIViewController methods
+ are called just the same as before, like: `viewDidLoad`, `viewWillAppear`, `viewDidAppear`, `viewWillDisappear`, and `viewDidDisappear`
+ along with corrisponding view component methods.
+ 
+ ```swift
+ class MyViewController : ViewController<MyViewComponent> {
+ override func viewDidLoad() {
+ super.viewDidLoad()
+ // Do any additional setup after loading the component like normal.
+ }
+ }
+ 
+ ```
  */
 open class ViewController<C : ViewComponent>: UIViewController, UINavigationBarDelegate {
   
@@ -35,7 +35,7 @@ open class ViewController<C : ViewComponent>: UIViewController, UINavigationBarD
   /**
    Required init that instantiates the view controller and creates an instance
    of the view component.
-  */
+   */
   public required init() {
     self.component  = C()
     
@@ -58,7 +58,7 @@ open class ViewController<C : ViewComponent>: UIViewController, UINavigationBarD
     } else {
       frame = UIScreen.main.bounds
     }
-
+    
     component.prepareForRender()
     
     let componentView     = component.render()
@@ -101,9 +101,9 @@ open class ViewController<C : ViewComponent>: UIViewController, UINavigationBarD
   }
   
   /**
-    Action for the default back navigation bar item.
+   Action for the default back navigation bar item.
    
-    - parameter sender: The caller or object that called action.
+   - parameter sender: The caller or object that called action.
    */
   @objc public func backAction(_ sender:Any?) {
     pop()
@@ -112,29 +112,29 @@ open class ViewController<C : ViewComponent>: UIViewController, UINavigationBarD
 
 extension ViewController /* navigation */ {
   /**
-    Pushes to the provided route open.
+   Pushes to the provided route open.
    
-    - parameter route: route option to move to.
-    - parameter animated: Indicates if the action should be animated.
+   - parameter route: route option to move to.
+   - parameter animated: Indicates if the action should be animated.
    */
   public func push(_ route:RouteOption, animated:Bool = true) {
     navigationController?.pushViewController(route.controller, animated: animated)
   }
   
   /**
-    Pops current view controller and moves back to previous.
-
-    - parameter animated: Indicates if the action should be animated.
+   Pops current view controller and moves back to previous.
+   
+   - parameter animated: Indicates if the action should be animated.
    */
   public func pop(_ animated:Bool = true) {
     navigationController?.popViewController(animated: animated)
   }
   
   /**
-    Pops current view controller back to specific route.
-
-    - parameter route: route option to move to.
-    - parameter animated: Indicates if the action should be animated.
+   Pops current view controller back to specific route.
+   
+   - parameter route: route option to move to.
+   - parameter animated: Indicates if the action should be animated.
    */
   public func pop(_ to:RouteOption, animated:Bool = true) {
     navigationController?.popToViewController(to.controller, animated: animated)
