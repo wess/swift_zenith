@@ -54,21 +54,19 @@ open class ViewComponent : NSObject {
     
     return self.view
   }
-}
 
-extension ViewComponent /* optionals */ {
   /// Called right before the view component adds subviews, lays them out and presents them.
-  public func prepareForRender()  {}
+  open func prepareForRender()  {}
   
   /// Notifies the view component that it's view is about to be added to the view hiearchy.
-  public func willAppear()        {}
+  open func willAppear()        {}
   
   /// Notifies the view component that it's view appeared in the view hierarchy.
-  public func didAppear()         {}
+  open func didAppear()         {}
   
   /// Notifies the view component that it's view is about to be removed from a view hierarchy.
-  public func willDisappear()     {}
+  open func willDisappear()     {}
   
   /// Notifies the view component that its view was removed from a view hierarchy.
-  public func didDisappear()      {}
+  open func didDisappear()      {}
 }
